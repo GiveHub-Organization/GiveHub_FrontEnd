@@ -17,6 +17,8 @@ const OrganizationDashboard = () => {
     <>
       <div className="pt-20 min-h-screen bg-gray-100">
         <div className="container mx-auto p-6">
+        <h2 className="text-xl text-center font-bold mb-8">Organization Dashboard</h2>
+
           <h2 className="text-3xl text-center font-bold mb-8">Available Drives</h2>
           <div className="bg-white p-6 rounded-lg shadow-lg">
             {drives.length > 0 ? (

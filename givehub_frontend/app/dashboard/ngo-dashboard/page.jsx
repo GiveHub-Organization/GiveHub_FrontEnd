@@ -1,11 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import sampleData from '@/json/sampleData';
-import { newUser } from "@/useContext/UserProvider"
 
-const NGODashboard = () => {
-  const user = useUser();
-
+const NGODashboard = ({ user }) => {
   const [driveData, setDriveData] = useState({
     title: '',
     description: '',
@@ -59,7 +56,9 @@ const NGODashboard = () => {
   return (
     <>
       <div className="pt-20 min-h-screen bg-gray-100">
-        <div className="container mx-auto p-6">
+      <div className="flex items-center justify-center ">
+      <h2 className="text-3xl text-center font-bold mb-8">NGO Dashboard</h2>
+      </div>      <div className="container mx-auto p-6">
           {/* Button to show/hide the form */}
           <button
             onClick={toggleFormVisibility}

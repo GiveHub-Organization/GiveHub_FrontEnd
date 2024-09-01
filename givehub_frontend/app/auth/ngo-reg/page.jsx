@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import Header from '@/components/Header';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const NGORegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -29,10 +30,60 @@ const NGORegisterForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, like form validation or API call.
-    console.log('Form submitted:', formData);
+
+    // KRA PIN Regex
+
+    // Initialize an array to collect error messages
+    const errors = [];
+
+    // Basic validation
+    if (!formData.ngoName || !formData.email || !formData.password || !formData.repeatPassword || !formData.contactPersonName || !formData.contactPersonNumber || !formData.kraPin || !formData.registrationCertificate) {
+      errors.push('Please fill out all required fields.');
+    }
+
+    if (formData.password !== formData.repeatPassword) {
+      errors.push('Passwords do not match.');
+    }
+
+    // Check if there are any errors
+    if (errors.length > 0) {
+      // Show all error messages in one alert
+      alert(errors.join('\n'));
+      return;
+    }
+
+    // Proceed with form submission if there are no errors
+    const formDataToSend = new FormData();
+    formDataToSend.append('ngoName', formData.ngoName);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('password', formData.password);
+    formDataToSend.append('contactPersonName', formData.contactPersonName);
+    formDataToSend.append('contactPersonNumber', formData.contactPersonNumber);
+    formDataToSend.append('kraPin', formData.kraPin);
+    formDataToSend.append('registrationCertificate', formData.registrationCertificate);
+
+    try {
+      const response = await axios.post('/api/register', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        // Handle successful registration
+        console.log('Registration successful:', response.data);
+        alert('Registration successful!');
+      } else {
+        // Handle non-successful response
+        console.error('Registration failed:', response.data);
+        alert('Registration failed.');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -68,7 +119,7 @@ const NGORegisterForm = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-600"
-                  placeholder="Enter your organization email"
+                  placeholder="Enter your NGO email"
                   required
                 />
               </div>
@@ -144,7 +195,7 @@ const NGORegisterForm = () => {
               </div>
               <div className="mb-6 col-span-1 md:col-span-2">
                 <label htmlFor="registrationCertificate" className="block text-gray-700 font-medium mb-2">
-                  Upload Your NGO Registration Certificate (PDF)
+                  Upload Your Registration Certificate (PDF)
                 </label>
                 <input
                   type="file"
