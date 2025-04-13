@@ -1,0 +1,2 @@
+Give Hub is a web platform designed to reduce waste and support communities by facilitating donations of unused food and essential items from organizations such as restaurants, schools, and churches. NGOs can log in to view available donations, connect with donors, and organize collection drives. The platform ensures efficient resource redistribution and promotes sustainable giving through a user-friendly dashboard tailored for both NGOs and donor organizations.
+
